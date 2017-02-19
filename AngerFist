@@ -1,0 +1,30 @@
+/* 
+THE ANGER FIST
+Nicholas Adams
+GDES 3015 Wearable Computing
+OCAD University 
+Created on 2/15/2017 
+Based on: 
+Tone Melody, Arduino Example under 0.2 Digital
+*/
+
+#include "pitches.h" // Note library pulled from Arduino's tone melody example
+
+int buzzer1 = 9;
+int buzzer2 = 10; // The data pins used for the two buzzers
+int note1 = 277; 
+int note2 = 131; // The frequency of the two notes
+int beat = 500; // How long the note will play for
+int pause = 750; // How long it will before alternating to the other note
+
+void setup() {
+  pinMode(buzzer1, OUTPUT);
+  pinMode(buzzer2, OUTPUT); // Sets the two buzzers as outputs for the sound
+  }
+
+void loop() { //Ensures the code continues to run even when there is no flow to buzzers
+  tone(buzzer1, note1, beat); //Plays the aggresive tone
+  delay(pause); // A rest
+  tone(buzzer2, note2, beat); //Plays an aggresive tone on other speaker
+  delay(pause);
+}
