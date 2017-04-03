@@ -1,0 +1,143 @@
+/* 
+THE MUSCIAL ARM
+Nicholas Adams
+GDES 3015 Wearable Computing
+OCAD University 
+Created on 3/19/2017 
+Based on: 
+Getting Started with Sensors Example 3, Class Exercise by Kate Hartman
+*/
+
+#include <toneAC.h> // These tone libaries allow for more control and power in regards to the buzzer and its capabilites. It also allows you to play two tones at once from two seperate buzzers
+#include <toneAC2.h> // These proved to be very vital and important to this project
+
+// Variable Setup
+int forcesensor1 = 0; 
+int forcesensor2 = 0;
+int mappedforcesensor1value = 0;
+int mappedforcesensor2value = 0;
+// The Analog Pins Used
+int sensorPin1 = A2;
+int sensorPin2 = A3; 
+// The Thresholds for the sensor values
+int threshold1 = 210;
+int threshold2 = 170;
+int threshold3 = 130;
+int threshold4 = 90;
+int threshold5 = 40;
+
+int buzzer2 = 13;
+
+void setup() {
+  // troubleshooting 
+  Serial.begin(9600);
+  
+}
+
+void loop() {
+  
+  // Reads the force sensor
+  forcesensor1 = analogRead(sensorPin1);
+  forcesensor2 = analogRead(sensorPin2);
+ // Maps the sensor values to a range im used to
+  mappedforcesensor1value = map(forcesensor1, 0, 1000, 0, 255);
+  mappedforcesensor2value = map(forcesensor2, 0, 1000, 0, 255);
+
+  //troubleshooting
+  Serial.print("Force sensor value 1: ");
+  Serial.print(mappedforcesensor1value);
+  Serial.print("Force sensor value 2: ");
+  Serial.print(mappedforcesensor2value);
+  // tells the tone level
+  Serial.print(", Current tone: ");
+
+  // if the value is greater than threshold #1, then play this tone
+  if(mappedforcesensor1value>threshold1){
+    Serial.println("tone1"); // Tells you which tone is playing on serial monitor
+
+    toneAC(111, 8, 100); // (Tone Frequency, Volume, Duration of Tone)
+  
+    toneAC(); // Stops the tone
+  }
+  // if the value is less or equal to threshold #1 and greater than threshold #2, play this tone
+  else if(mappedforcesensor1value>threshold2){
+    Serial.println("tone2");
+
+    toneAC(211, 8, 100);
+   
+    toneAC();
+  }
+   else if(mappedforcesensor1value>threshold3){
+    Serial.println("tone3");
+
+    toneAC(255, 8, 100);
+    
+    toneAC();
+  }
+   else if(mappedforcesensor1value>threshold4){
+    Serial.println("tone4");
+
+    toneAC(311, 8, 100);
+    
+    toneAC();
+  }
+   else if(mappedforcesensor1value>threshold5){
+    Serial.println("tone5");
+
+    toneAC(355, 8, 100);
+    
+    toneAC();
+  }
+  // If there is no pressure on the sensor, play no tone
+  else{
+   
+    Serial.println("mute");
+  }
+  //
+  // The tones and code for sensor 2
+  //
+  // if the value is greater than threshold #1, then play this tone
+  if(mappedforcesensor2value>threshold1){
+    Serial.println("tone1.2");
+
+    
+    toneAC2(13, 12, 111, 100);// (Data Pin 1, Data Pin 2, Tone Frequency, Duration)
+    toneAC(); // Stop the Tone
+  }
+  // if the value is less or equal to threshold #1 and greater than threshold #2, play this tone
+  else if(mappedforcesensor2value>threshold2){
+    Serial.println("tone2.2");
+
+ 
+    toneAC2(13, 12, 211, 100);
+    toneAC();
+  }
+   else if(mappedforcesensor2value>threshold3){
+    Serial.println("tone2.3");
+
+   
+    toneAC2(13, 12, 255, 100);
+    toneAC();
+  }
+   else if(mappedforcesensor2value>threshold4){
+    Serial.println("tone2.4");
+
+  
+    toneAC2(13, 12, 311, 100);
+    toneAC();
+  }
+   else if(mappedforcesensor2value>threshold5){
+    Serial.println("tone2.5");
+
+    
+    toneAC2(13, 12, 355, 100);
+    toneAC();
+  }
+  // if there are no values from the sensor, stop the tones
+  else{
+    
+    Serial.println("mute");
+  }
+  // delay between readings, this also influences the space between the notes played from tones
+  delay(25);
+}
