@@ -11,8 +11,8 @@
 
 
 #include <Adafruit_NeoPixel.h> // The Adafruit library that makes the neopixel work
-#include <toneAC.h> // These tone libaries allow for more control and power in regards to the buzzer and its capabilites. It also allows you to play two tones at once from two seperate buzzers
-#include <toneAC2.h> // These proved to be very vital and important to this project
+#include <toneAC.h> // These tone libaries allow for more control and power in regards to the buzzer
+#include <toneAC2.h> // 
 
 // Variable Setup
 int forcesensor1 = 0;
