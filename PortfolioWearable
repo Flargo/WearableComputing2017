@@ -1,0 +1,372 @@
+/*
+  THE CYBORG's ARM
+  Nicholas Adams
+  GDES 3015 Wearable Computing
+  OCAD University
+  Created on 4/8/2017
+  Based on:
+  The Musical Arm, Project by Nick Adams
+  Working with NeoPixel, Class Exercise by Kate Hartman
+*/
+
+
+#include <Adafruit_NeoPixel.h> // The Adafruit library that makes the neopixel work
+#include <toneAC.h> // These tone libaries allow for more control and power in regards to the buzzer and its capabilites. It also allows you to play two tones at once from two seperate buzzers
+#include <toneAC2.h> // These proved to be very vital and important to this project
+
+// Variable Setup
+int forcesensor1 = 0;
+int forcesensor2 = 0;
+int mappedforcesensor1value = 0;
+int mappedforcesensor2value = 0;
+// The Pins Used
+int DataPin = 7;
+int sensorPin1 = A2;
+int sensorPin2 = A3;
+// The Thresholds for the sensor values
+int threshold1 = 210;
+int threshold2 = 170;
+int threshold3 = 130;
+int threshold4 = 90;
+int threshold5 = 40;
+
+int buzzer2 = 13;
+
+//Setup for Neopixel LED Strip. Number of Pixels, Pin Number, Type of LED
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(41, DataPin, NEO_GRB + NEO_KHZ400);
+
+void setup() {
+  strip.begin();
+  // troubleshooting
+  Serial.begin(9600);
+  strip.show();
+}
+
+void loop() {
+
+  // Reads the force sensor
+  forcesensor1 = analogRead(sensorPin1);
+  forcesensor2 = analogRead(sensorPin2);
+  // Maps the sensor values to range suitable for LEDS
+  mappedforcesensor1value = map(forcesensor1, 0, 1000, 0, 255);
+  mappedforcesensor2value = map(forcesensor2, 0, 1000, 0, 255);
+
+  int c1 = mappedforcesensor2value; // Create a constantly updating variable that will be used for color control
+  int c2 = mappedforcesensor2value; // Create a constantly updating variable that will be used for audio control
+
+  
+  //troubleshooting
+  Serial.print("Force sensor value 1: ");
+  Serial.print(mappedforcesensor1value);
+  Serial.print("Force sensor value 2: ");
+  Serial.print(mappedforcesensor2value);
+  // tells the strength level
+  Serial.print(", Current Strength: ");
+
+  // if the value is greater than threshold #1, then make the LED strip fully red
+  if (mappedforcesensor1value > threshold1 ) {
+
+    Serial.println("str5"); // Tells you what preset its on depending on force
+    toneAC (c2, 10, 100); // Plays a tone which frequency depends on the current input of force sensor 2
+    strip.setPixelColor(0, 255, c1 , 0);  // Set the chosen pixel to fully red
+    strip.setPixelColor(1, 255, c1 , 0);  // The green level is controlled by the current input of force sensor 2
+    strip.setPixelColor(2, 255, c1 , 0);
+    strip.setPixelColor(3, 255, c1 , 0);
+    strip.setPixelColor(4, 255, c1 , 0);
+    strip.setPixelColor(5, 255, c1 , 0);
+    strip.setPixelColor(6, 255, c1 , 0);
+    strip.setPixelColor(7, 255, c1 , 0);
+    strip.setPixelColor(8, 255, c1 , 0);
+    strip.setPixelColor(9, 255, c1 , 0);
+    strip.setPixelColor(10, 255, c1 , 0);
+    strip.setPixelColor(11, 255, c1 , 0);
+    strip.setPixelColor(12, 255, c1 , 0);
+    strip.setPixelColor(13, 255, c1 , 0);
+    strip.setPixelColor(14, 255, c1 , 0);
+    strip.setPixelColor(15, 255, c1 , 0);
+    strip.setPixelColor(16, 255, c1 , 0);
+    strip.setPixelColor(17, 255, c1 , 0);
+    strip.setPixelColor(18, 255, c1 , 0);
+    strip.setPixelColor(19, 255, c1 , 0);
+    strip.setPixelColor(20, 255, c1 , 0);
+    strip.setPixelColor(21, 255, c1 , 0);
+    strip.setPixelColor(22, 255, c1 , 0);
+    strip.setPixelColor(23, 255, c1 , 0);
+    strip.setPixelColor(24, 255, c1 , 0);
+    strip.setPixelColor(25, 255, c1 , 0);
+    strip.setPixelColor(26, 255, c1 , 0);
+    strip.setPixelColor(27, 255, c1 , 0);
+    strip.setPixelColor(28, 255, c1 , 0);
+    strip.setPixelColor(29, 255, c1 , 0);
+    strip.setPixelColor(30, 255, c1 , 0);
+    strip.setPixelColor(31, 255, c1 , 0);
+    strip.setPixelColor(32, 255, c1 , 0);
+    strip.setPixelColor(33, 255, c1 , 0);
+    strip.setPixelColor(34, 255, c1 , 0);
+    strip.setPixelColor(35, 255, c1 , 0);
+    strip.setPixelColor(36, 255, c1 , 0);
+    strip.setPixelColor(37, 255, c1 , 0);
+    strip.setPixelColor(38, 255, c1 , 0);
+    strip.setPixelColor(39, 255, c1 , 0);
+    strip.setPixelColor(40, 255, c1 , 0);
+   
+    
+    strip.show(); // Show all the hard work!
+  }
+  // If the wearer applies a little less pressure, change the strip, Less LEDS!
+  else if (mappedforcesensor1value > threshold2 && mappedforcesensor1value <= threshold1) {
+    Serial.println("str4");
+    //strip.show();
+    toneAC (c2, 9, 100);
+     
+    strip.setPixelColor(0, 255, c1 , 0);
+    strip.setPixelColor(1, 255, c1 , 0);
+    strip.setPixelColor(2, 255, c1 , 0);
+    strip.setPixelColor(3, 255, c1 , 0);
+    strip.setPixelColor(4, 255, c1 , 0);
+    strip.setPixelColor(5, 255, c1 , 0);
+    strip.setPixelColor(6, 255, c1 , 0);
+    strip.setPixelColor(7, 255, c1 , 0);
+    strip.setPixelColor(8, 255, c1 , 0);
+    strip.setPixelColor(9, 255, c1 , 0);
+    strip.setPixelColor(10, 255, c1 , 0);
+    strip.setPixelColor(11, 255, c1 , 0);
+    strip.setPixelColor(12, 255, c1 , 0);
+     strip.setPixelColor(13, 255, c1 , 0);
+    strip.setPixelColor(14, 255, c1 , 0);
+    strip.setPixelColor(15, 255, c1 , 0);
+    strip.setPixelColor(16, 255, c1 , 0);
+    strip.setPixelColor(17, 255, c1 , 0);
+    strip.setPixelColor(18, 255, c1, 0);
+    strip.setPixelColor(19, 255, c1 , 0);
+    strip.setPixelColor(20, 255, c1 , 0);
+    strip.setPixelColor(21, 255, c1 , 0);
+    strip.setPixelColor(22, 255, c1 , 0);
+    strip.setPixelColor(23, 255, c1 , 0);
+    strip.setPixelColor(24, 255, c1 , 0);
+    strip.setPixelColor(25, 255, c1 , 0);
+    strip.setPixelColor(26, 255, c1 , 0);
+    strip.setPixelColor(27, 255, c1 , 0);
+    strip.setPixelColor(28, 255, c1 , 0);
+    strip.setPixelColor(29, 255, c1 , 0);
+    strip.setPixelColor(30, 255, c1 , 0);
+    strip.setPixelColor(31, 255, c1 , 0);
+    strip.setPixelColor(32, 0, 0 , 0);
+    strip.setPixelColor(33, 0, 0 , 0);
+    strip.setPixelColor(34, 0, 0 , 0);
+    strip.setPixelColor(35, 0, 0 , 0);
+    strip.setPixelColor(36, 0, 0 , 0);
+    strip.setPixelColor(37, 0, 0 , 0);
+    strip.setPixelColor(38, 0, 0 , 0);
+    strip.setPixelColor(39, 0, 0 , 0);
+    strip.setPixelColor(40, 0, 0 , 0);
+
+    strip.show();
+
+  }
+    // If the wearer applies a little less pressure, change the strip, Less LEDS!
+  else if (mappedforcesensor1value > threshold3 && mappedforcesensor1value <= threshold2)  {
+    Serial.println("str3");
+    //strip.show();
+    toneAC (c2, 8, 100);
+
+    strip.setPixelColor(0, 255, c1 , 0);
+    strip.setPixelColor(1, 255, c1 , 0);
+    strip.setPixelColor(2, 255, c1 , 0);
+    strip.setPixelColor(3, 255, c1 , 0);
+    strip.setPixelColor(4, 255, c1 , 0);
+    strip.setPixelColor(5, 255, c1 , 0);
+    strip.setPixelColor(6, 255, c1 , 0);
+    strip.setPixelColor(7, 255, c1 , 0);
+    strip.setPixelColor(8, 255, c1 , 0);
+    strip.setPixelColor(9, 255, c1 , 0);
+    strip.setPixelColor(10, 255, c1 , 0);
+    strip.setPixelColor(11, 255, c1 , 0);
+    strip.setPixelColor(12, 255, c1 , 0);
+    strip.setPixelColor(13, 255, c1 , 0);
+    strip.setPixelColor(14, 255, c1 , 0);
+    strip.setPixelColor(15, 255, c1 , 0);
+    strip.setPixelColor(16, 255, c1 , 0);
+    strip.setPixelColor(17, 255, c1 , 0);
+    strip.setPixelColor(18, 255, c1, 0);
+    strip.setPixelColor(19, 255, c1 , 0);
+    strip.setPixelColor(20, 255, c1 , 0);
+    strip.setPixelColor(21, 255, c1 , 0);
+    strip.setPixelColor(22, 255, c1 , 0);
+    strip.setPixelColor(23, 255, c1 , 0);
+    strip.setPixelColor(24, 0, 0 , 0);
+    strip.setPixelColor(25, 0, 0, 0);
+    strip.setPixelColor(26, 0, 0 , 0);
+    strip.setPixelColor(27, 0, 0 , 0);
+    strip.setPixelColor(28, 0, 0 , 0);
+    strip.setPixelColor(29, 0, 0 , 0);
+    strip.setPixelColor(30, 0, 0 , 0);
+    strip.setPixelColor(31, 0, 0 , 0);
+    strip.setPixelColor(32, 0, 0 , 0);
+    strip.setPixelColor(33, 0, 0 , 0);
+    strip.setPixelColor(34, 0, 0 , 0);
+    strip.setPixelColor(35, 0, 0 , 0);
+    strip.setPixelColor(36, 0, 0 , 0);
+    strip.setPixelColor(37, 0, 0 , 0);
+    strip.setPixelColor(38, 0, 0 , 0);
+    strip.setPixelColor(39, 0, 0 , 0);
+    strip.setPixelColor(40, 0, 0 , 0);
+    strip.show();
+  }
+    // If the wearer applies a little less pressure, change the strip, Less LEDS!
+  else if (mappedforcesensor1value > threshold4 && mappedforcesensor1value <= threshold3) {
+    Serial.println("st2");
+    //strip.show();
+    toneAC (c2, 7, 100);
+
+    strip.setPixelColor(0, 255, c1 , 0);
+    strip.setPixelColor(1, 255, c1 , 0);
+    strip.setPixelColor(2, 255, c1 , 0);
+    strip.setPixelColor(3, 255, c1 , 0);
+    strip.setPixelColor(4, 255, c1 , 0);
+    strip.setPixelColor(5, 255, c1 , 0);
+     strip.setPixelColor(6, 255, c1 , 0);
+    strip.setPixelColor(7, 255, c1 , 0);
+    strip.setPixelColor(8, 255, c1 , 0);
+    strip.setPixelColor(9, 255, c1, 0);
+    strip.setPixelColor(10, 255, c1 , 0);
+    strip.setPixelColor(11, 255, c1 , 0);
+    strip.setPixelColor(12, 255, c1 , 0);
+    strip.setPixelColor(13, 255, c1 , 0);
+    strip.setPixelColor(14, 255, c1 , 0);
+    strip.setPixelColor(15, 0, 0 , 0);
+    strip.setPixelColor(16, 0, 0 , 0);
+    strip.setPixelColor(17, 0, 0 , 0);
+    strip.setPixelColor(18, 0, 0, 0);
+    strip.setPixelColor(19, 0, 0 , 0);
+    strip.setPixelColor(20, 0, 0 , 0);
+    strip.setPixelColor(21, 0, 0 , 0);
+    strip.setPixelColor(22, 0, 0 , 0);
+    strip.setPixelColor(23, 0, 0 , 0);
+    strip.setPixelColor(24, 0, 0 , 0);
+    strip.setPixelColor(25, 0, 0 , 0);
+    strip.setPixelColor(26, 0, 0 , 0);
+    strip.setPixelColor(27, 0, 0 , 0);
+    strip.setPixelColor(28, 0, 0 , 0);
+    strip.setPixelColor(29, 0, 0 , 0);
+    strip.setPixelColor(30, 0, 0 , 0);
+    strip.setPixelColor(31, 0, 0 , 0);
+    strip.setPixelColor(32, 0, 0 , 0);
+    strip.setPixelColor(33, 0, 0 , 0);
+    strip.setPixelColor(34, 0, 0 , 0);
+    strip.setPixelColor(35, 0, 0 , 0);
+    strip.setPixelColor(36, 0, 0 , 0);
+    strip.setPixelColor(37, 0, 0 , 0);
+    strip.setPixelColor(38, 0, 0 , 0);
+    strip.setPixelColor(39, 0, 0 , 0);
+    strip.setPixelColor(40, 0, 0 , 0);
+
+    
+    strip.show();
+  }
+    // If the wearer applies a little less pressure, change the strip, Less LEDS!
+  else if (mappedforcesensor1value > threshold5 && mappedforcesensor1value <= threshold4 ) {
+    Serial.println("st1");
+    //strip.show();
+    toneAC (c2, 6, 100);
+
+    strip.setPixelColor(0, 255, c1 , 0);
+    strip.setPixelColor(1, 255, c1 , 0);
+    strip.setPixelColor(2, 255, c1 , 0);
+     strip.setPixelColor(3, 255, c1 , 0);
+    strip.setPixelColor(4, 255, c1 , 0);
+    strip.setPixelColor(5, 255, c1 , 0);
+    strip.setPixelColor(6, 255, c1, 0);
+    strip.setPixelColor(7, 255, c1 , 0);
+    strip.setPixelColor(8, 0, 0 , 0);
+    strip.setPixelColor(9, 0, 0 , 0);
+    strip.setPixelColor(10, 0, 0 , 0);
+    strip.setPixelColor(11, 0, 0 , 0);
+    strip.setPixelColor(12, 0, 0 , 0);
+    strip.setPixelColor(13, 0, 0 , 0);
+    strip.setPixelColor(14, 0, 0 , 0);
+    strip.setPixelColor(15, 0, 0 , 0);
+    strip.setPixelColor(16, 0, 0 , 0);
+    strip.setPixelColor(17, 0, 0 , 0);
+    strip.setPixelColor(18, 0, 0, 0);
+    strip.setPixelColor(19, 0, 0 , 0);
+    strip.setPixelColor(20, 0, 0 , 0);
+    strip.setPixelColor(21, 0, 0 , 0);
+    strip.setPixelColor(22, 0, 0 , 0);
+    strip.setPixelColor(23, 0, 0 , 0);
+    strip.setPixelColor(24, 0, 0 , 0);
+    strip.setPixelColor(25, 0, 0 , 0);
+    strip.setPixelColor(26, 0, 0 , 0);
+    strip.setPixelColor(27, 0, 0 , 0);
+    strip.setPixelColor(28, 0, 0 , 0);
+    strip.setPixelColor(29, 0, 0 , 0);
+    strip.setPixelColor(30, 0, 0 , 0);
+    strip.setPixelColor(31, 0, 0 , 0);
+    strip.setPixelColor(32, 0, 0 , 0);
+    strip.setPixelColor(33, 0, 0 , 0);
+    strip.setPixelColor(34, 0, 0 , 0);
+    strip.setPixelColor(35, 0, 0 , 0);
+    strip.setPixelColor(36, 0, 0 , 0);
+    strip.setPixelColor(37, 0, 0 , 0);
+    strip.setPixelColor(38, 0, 0 , 0);
+    strip.setPixelColor(39, 0, 0 , 0);
+    strip.setPixelColor(40, 0, 0 , 0);
+
+    strip.show();
+
+
+  }
+  // If there is no pressure on the sensor, turn off the leds
+  // This ends up being buggy regardless, so it does not have strip.show.
+  // This has the effect of making the last LED setup before releasing be on display until a new input is given
+  else {
+    strip.setPixelColor(0, 0, 0 , 0);
+    strip.setPixelColor(1, 0, 0 , 0);
+    strip.setPixelColor(2, 0, 0 , 0);
+    strip.setPixelColor(3, 0, 0 , 0);
+    strip.setPixelColor(4, 0, 0 , 0);
+    strip.setPixelColor(5, 0, 0 , 0);
+    strip.setPixelColor(6, 0, 0 , 0);
+    strip.setPixelColor(7, 0, 0 , 0);
+    strip.setPixelColor(8, 0, 0 , 0);
+    strip.setPixelColor(9, 0, 0 , 0);
+    strip.setPixelColor(10, 0, 0 , 0);
+    strip.setPixelColor(11, 0, 0 , 0);
+    strip.setPixelColor(12, 0, 0 , 0);
+    strip.setPixelColor(13, 0, 0 , 0);
+    strip.setPixelColor(14, 0, 0 , 0);
+    strip.setPixelColor(15, 0, 0 , 0);
+    strip.setPixelColor(16, 0, 0 , 0);
+    strip.setPixelColor(17, 0, 0 , 0);
+    strip.setPixelColor(18, 0, 0, 0);
+    strip.setPixelColor(19, 0, 0 , 0);
+    strip.setPixelColor(20, 0, 0 , 0);
+    strip.setPixelColor(21, 0, 0 , 0);
+    strip.setPixelColor(22, 0, 0 , 0);
+    strip.setPixelColor(23, 0, 0 , 0);
+    strip.setPixelColor(24, 0, 0 , 0);
+    strip.setPixelColor(25, 0, 0 , 0);
+    strip.setPixelColor(26, 0, 0 , 0);
+    strip.setPixelColor(27, 0, 0 , 0);
+    strip.setPixelColor(28, 0, 0 , 0);
+    strip.setPixelColor(29, 0, 0 , 0);
+    strip.setPixelColor(30, 0, 0 , 0);
+    strip.setPixelColor(31, 0, 0 , 0);
+    strip.setPixelColor(32, 0, 0 , 0);
+    strip.setPixelColor(33, 0, 0 , 0);
+    strip.setPixelColor(34, 0, 0 , 0);
+    strip.setPixelColor(35, 0, 0 , 0);
+    strip.setPixelColor(36, 0, 0 , 0);
+    strip.setPixelColor(37, 0, 0 , 0);
+    strip.setPixelColor(38, 0, 0 , 0);
+    strip.setPixelColor(39, 0, 0 , 0);
+    strip.setPixelColor(40, 0, 0 , 0);
+
+    Serial.println("noLEDs");
+
+  }
+delay(5);
+  //
+  
+
+}
